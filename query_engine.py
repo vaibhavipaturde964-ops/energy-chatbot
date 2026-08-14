@@ -4,7 +4,8 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from groq import Groq
 
-# Load .env for local development (no-op when running on Streamlit Cloud)
+# Load .env for local development.
+# On Railway/production this is a no-op — the env var is injected by the platform.
 load_dotenv()
 
 # 1. Path setup & Model loading
@@ -12,26 +13,19 @@ DB_PATH = "vector_db"
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 vector_db = Chroma(persist_directory=DB_PATH, embedding_function=embeddings)
 
-# 2. Groq Client Init
-# Key resolution order:
-#   1. .env file (local dev, loaded above by python-dotenv)
-#   2. Shell environment variable (CI / Docker / server)
-#   3. Streamlit Cloud Secrets (production deployment)
-def _get_groq_api_key() -> str:
-    key = os.environ.get("GROQ_API_KEY")
-    if key:
-        return key
-    try:
-        import streamlit as st
-        return st.secrets["GROQ_API_KEY"]
-    except Exception:
-        raise RuntimeError(
-            "GROQ_API_KEY not found. "
-            "For local development: add GROQ_API_KEY=<your_key> to a .env file in the project root. "
-            "For Streamlit Cloud: add it under Settings → Secrets."
-        )
+# 2. Groq API key — read exclusively from environment.
+#    Local dev:  set GROQ_API_KEY in root .env file.
+#    Railway:    set GROQ_API_KEY in Railway project → Variables tab.
+#    The actual key value must never appear in source code.
+_groq_api_key = os.getenv("GROQ_API_KEY")
+if not _groq_api_key:
+    raise RuntimeError(
+        "GROQ_API_KEY is not configured. "
+        "Local dev: add GROQ_API_KEY=<your_key> to the root .env file. "
+        "Railway: add GROQ_API_KEY in the project Variables tab."
+    )
 
-groq_client = Groq(api_key=_get_groq_api_key())
+groq_client = Groq(api_key=_groq_api_key)
 
 def query_rag(user_query: str) -> str:
     try:
