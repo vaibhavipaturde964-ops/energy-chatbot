@@ -69,9 +69,14 @@ coverage.xml
 .cache/
 ~/.cache/huggingface/
 
+# ----- Large raw data files (exceed GitHub's 100 MB limit) -
+# These are source/input data files. Download separately if needed.
+data/raw/daily_dataset.csv
+
 # ============================================================
 # Intentionally TRACKED in git:
 #   vector_db/      — ChromaDB index (needed for deployment)
 #   bg.png          — UI background asset
 #   logo.png        — UI logo asset
+#   data/raw/*      — all raw files EXCEPT daily_dataset.csv
 # ============================================================
