@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoBot — Smart Energy Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <!-- ── Sidebar ── -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">🌱</div>
+      <h2 class="sidebar-title">EcoBot Hub</h2>
+      <p class="sidebar-caption">AI Energy &amp; Sustainability Assistant</p>
+      <hr class="sidebar-divider" />
+
+      <div class="status-section">
+        <p class="status-heading">⚡ System Status</p>
+        <p class="status-item"><span class="dot green"></span><strong>Model:</strong> Llama 3.3 (70B)</p>
+        <p class="status-item"><span class="dot green"></span><strong>Vector DB:</strong> ChromaDB</p>
+        <p class="status-item"><span class="dot green"></span><strong>Engine:</strong> Groq RAG</p>
+      </div>
+
+      <hr class="sidebar-divider" />
+      <button id="clearBtn" class="clear-btn">🗑️ Clear Chat</button>
+    </aside>
+
+    <!-- ── Main area ── -->
+    <main class="main">
+
+      <!-- Header -->
+      <header class="header">
+        <span class="header-icon">🌱</span>
+        <div>
+          <h1 class="header-title">EcoBot Assistant</h1>
+          <p class="header-sub">Your intelligent consultant for smart energy usage, weather impacts, and clean tech.</p>
+        </div>
+      </header>
+
+      <!-- Metric cards -->
+      <div class="metrics">
+        <div class="card"><div class="card-value">⚡ Smart Grid</div><div class="card-label">Energy Management</div></div>
+        <div class="card"><div class="card-value">🍃 Zero Carbon</div><div class="card-label">Sustainability</div></div>
+        <div class="card"><div class="card-value">🧠 Groq + RAG</div><div class="card-label">Fast Engine</div></div>
+      </div>
+
+      <!-- Chat window -->
+      <div class="chat-window" id="chatWindow">
+        <div class="welcome-msg">
+          <p>👋 Ask me anything about energy efficiency, smart grids, renewables, or the UK energy dataset.</p>
+        </div>
+      </div>
+
+      <!-- Error banner (hidden by default) -->
+      <div class="error-banner" id="errorBanner" style="display:none;"></div>
+
+      <!-- Input bar -->
+      <div class="input-bar">
+        <input
+          type="text"
+          id="userInput"
+          placeholder="Ask about energy efficiency, sustainability, or weather..."
+          autocomplete="off"
+        />
+        <button id="sendBtn">Send</button>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Backend URL config — edit _env.js for local dev, update before Vercel deploy -->
+  <script src="_env.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

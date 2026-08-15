@@ -74,10 +74,17 @@ coverage.xml
 # These are source/input data files. Download separately if needed.
 data/raw/daily_dataset.csv
 
+# ----- Node / frontend build artifacts ---------------------
+node_modules/
+frontend/node_modules/
+.vercel/
+
 # ============================================================
 # Intentionally TRACKED in git:
-#   vector_db/      — ChromaDB index (needed for deployment)
+#   vector_db/      — ChromaDB index (needed for Render deployment)
 #   bg.png          — UI background asset
 #   logo.png        — UI logo asset
 #   data/raw/*      — all raw files EXCEPT daily_dataset.csv
+#   backend/        — FastAPI backend for Render
+#   frontend/       — static frontend for Vercel
 # ============================================================

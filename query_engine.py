@@ -26,7 +26,7 @@ if not _groq_api_key:
     )
 
 groq_client = Groq(api_key=_groq_api_key)
-
+ 
 def query_rag(user_query: str) -> str:
     try:
         # A. Retrieve top 2 most relevant chunks for conciseness

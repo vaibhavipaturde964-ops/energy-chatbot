@@ -1,0 +1,239 @@
+/* ============================================================
+   EcoBot — Frontend styles
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #0e1117;
+  --surface:     rgba(31, 41, 55, 0.85);
+  --border:      rgba(46, 204, 113, 0.35);
+  --green:       #2ecc71;
+  --green-dim:   #1a7a44;
+  --text:        #f1f5f9;
+  --muted:       #9ca3af;
+  --user-bg:     rgba(46, 204, 113, 0.15);
+  --bot-bg:      rgba(31, 41, 55, 0.9);
+  --error-bg:    rgba(220, 38, 38, 0.15);
+  --error-border:#dc2626;
+  --radius:      12px;
+  --sidebar-w:   240px;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── Layout ── */
+.app-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: rgba(14, 17, 23, 0.96);
+  border-right: 1px solid var(--border);
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.sidebar-logo  { font-size: 2rem; text-align: center; }
+.sidebar-title { font-size: 1.1rem; font-weight: 700; color: var(--green); text-align: center; margin-top: 6px; }
+.sidebar-caption { font-size: 0.78rem; color: var(--muted); text-align: center; }
+.sidebar-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+
+.status-heading { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.status-item    { font-size: 0.82rem; color: var(--muted); display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
+.dot            { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot.green      { background: var(--green); box-shadow: 0 0 6px var(--green); }
+
+.clear-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.clear-btn:hover { background: rgba(46,204,113,0.1); color: var(--green); }
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 28px 32px 20px;
+  gap: 16px;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.header-icon  { font-size: 2.2rem; }
+.header-title { font-size: 2rem; font-weight: 800; color: var(--green); }
+.header-sub   { font-size: 0.88rem; color: var(--muted); margin-top: 2px; }
+
+/* ── Metric cards ── */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  flex-shrink: 0;
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+.card-value { font-size: 1rem; font-weight: 700; color: var(--green); }
+.card-label { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+
+/* ── Chat window ── */
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 2px;
+  scroll-behavior: smooth;
+}
+
+.welcome-msg {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ── Messages ── */
+.msg-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  animation: fadeIn 0.2s ease;
+}
+.msg-row.user  { flex-direction: row-reverse; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.avatar {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bubble {
+  max-width: 72%;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.msg-row.user  .bubble { background: var(--user-bg); border: 1px solid var(--border); border-top-right-radius: 3px; }
+.msg-row.bot   .bubble { background: var(--bot-bg);  border: 1px solid rgba(255,255,255,0.08); border-top-left-radius: 3px; }
+
+/* Sources */
+.sources {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.sources span {
+  display: inline-block;
+  background: rgba(46,204,113,0.1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  margin: 2px 3px 2px 0;
+}
+
+/* Typing indicator */
+.typing .bubble { color: var(--muted); font-style: italic; }
+
+/* ── Error banner ── */
+.error-banner {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  border-radius: var(--radius);
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  color: #fca5a5;
+  flex-shrink: 0;
+}
+
+/* ── Input bar ── */
+.input-bar {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.input-bar input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-bar input:focus { border-color: var(--green); }
+.input-bar input::placeholder { color: var(--muted); }
+
+.input-bar button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--green);
+  color: #0e1117;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.input-bar button:hover   { background: #27ae60; }
+.input-bar button:active  { transform: scale(0.97); }
+.input-bar button:disabled { background: var(--green-dim); cursor: not-allowed; }
+
+/* ── Scrollbar ── */
+.chat-window::-webkit-scrollbar { width: 5px; }
+.chat-window::-webkit-scrollbar-track { background: transparent; }
+.chat-window::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .sidebar   { display: none; }
+  .main      { padding: 16px; }
+  .metrics   { grid-template-columns: 1fr; }
+  .bubble    { max-width: 90%; }
+  .header-title { font-size: 1.4rem; }
+}
