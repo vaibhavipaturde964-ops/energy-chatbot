@@ -51,12 +51,14 @@ st.set_page_config(
 )
 
 # 2. Inject Custom CSS
+# 2. Inject Custom CSS
 st.markdown(f"""
     <style>
     {bg_css}
     
-    .stApp {{
-        color: #ffffff;
+    /* Force main app text color to white */
+    .stApp, .stApp p, .stApp span, .stApp div {{
+        color: #ffffff !important;
     }}
     
     /* Header & Logo Alignment */
@@ -76,18 +78,19 @@ st.markdown(f"""
     
     .sub-title {{
         font-size: 1.0rem;
-        color: #9ca3af;
+        color: #e5e7eb !important;
         margin-bottom: 25px;
     }}
 
     /* Semi-transparent Glass Cards */
     .metric-card {{
-        background: rgba(31, 41, 55, 0.8);
+        background: rgba(31, 41, 55, 0.85);
         backdrop-filter: blur(8px);
         border: 1px solid rgba(46, 204, 113, 0.4);
         border-radius: 12px;
         padding: 15px;
         text-align: center;
+        margin-bottom: 10px;
     }}
     
     .metric-value {{
@@ -98,15 +101,29 @@ st.markdown(f"""
     
     .metric-label {{
         font-size: 0.85rem;
-        color: #9ca3af;
+        color: #d1d5db !important;
     }}
     
+    /* Fix Chat Bubble Text Visibility (Dark semi-transparent background + White Text) */
+    [data-testid="stChatMessage"] {{
+        background-color: rgba(17, 24, 39, 0.85) !important;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }}
+
+    [data-testid="stChatMessage"] p, [data-testid="stChatMessage"] li {{
+        color: #ffffff !important;
+        font-weight: 400;
+        font-size: 0.95rem;
+    }}
+
     [data-testid="stSidebar"] {{
-        background-color: rgba(14, 17, 23, 0.92) !important;
+        background-color: rgba(14, 17, 23, 0.95) !important;
     }}
     </style>
 """, unsafe_allow_html=True)
-
 # 3. Sidebar
 with st.sidebar:
     st.title("🌱 EcoBot Hub")
