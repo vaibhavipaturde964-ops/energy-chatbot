@@ -5,34 +5,39 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from groq import Groq
 
-# Load .env for local development
+# Load environment variables for local dev (.env)
 load_dotenv()
 
+# 1. Path setup & Cached Model/DB Loading
 DB_PATH = "vector_db"
 
-# 1. Cache the heavy embedding model and vector DB in memory so it loads ONCE
 @st.cache_resource
 def get_vector_db():
+    """
+    Caches the HuggingFace embedding model and Chroma DB instance in memory 
+    to prevent cold-start delays on every rerun.
+    """
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     return Chroma(persist_directory=DB_PATH, embedding_function=embeddings)
 
-# Load database from cache
+# Initialize cached Vector DB
 vector_db = get_vector_db()
 
-# 2. Groq API key setup
+# 2. Groq API Key Setup
 _groq_api_key = os.getenv("GROQ_API_KEY")
 if not _groq_api_key:
     raise RuntimeError(
         "GROQ_API_KEY is not configured. "
         "Local dev: add GROQ_API_KEY=<your_key> to the root .env file. "
-        "Streamlit Cloud: add GROQ_API_KEY in App Settings -> Secrets."
+        "Streamlit Cloud: add GROQ_API_KEY under App Settings -> Secrets."
     )
 
+# Initialize Groq client
 groq_client = Groq(api_key=_groq_api_key)
 
 def query_rag(user_query: str) -> str:
     try:
-        # A. Retrieve top 2 most relevant chunks
+        # A. Retrieve top 2 most relevant chunks for conciseness
         results = vector_db.similarity_search(user_query, k=2)
         context_text = "\n\n".join([doc.page_content for doc in results])
 
@@ -53,7 +58,7 @@ def query_rag(user_query: str) -> str:
         4. Focus immediately on the practical core answer.
         """
 
-        # C. Call Groq Model
+        # C. Call Groq Model using official model ID
         response = groq_client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
