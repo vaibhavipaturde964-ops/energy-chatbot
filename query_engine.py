@@ -48,10 +48,9 @@ def query_rag(user_query: str) -> str:
         4. Focus immediately on the practical core answer.
         """
 
-        # Using llama-3.1-8b-instant for maximum compatibility and ultra-fast speed
-        # C. Call Groq Model with active model string
+        # Active production model on Groq
         response = groq_client.chat.completions.create(
-            model="llama-3.1-8b-instant",  # <--- Changed from llama-3.3-70b-versatile
+            model="openai/gpt-oss-20b",
             messages=[
                 {"role": "system", "content": "You give ultra-concise answers strictly under 8-10 lines."},
                 {"role": "user", "content": prompt}
